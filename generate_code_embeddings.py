@@ -1,4 +1,5 @@
-''' Code from Cynthia's repo (https://github.com/CynthiaTheGriffin/topology_project/tree/main)'''
+''' Code from Cynthia's repo (https://github.com/CynthiaTheGriffin/topology_project/tree/main) with
+a few changes to save embeddings of different levels in defferent directories'''
 import os
 from pathlib import Path
 from typing import Generator
@@ -30,13 +31,13 @@ def __traverse_tree(tree: Tree) -> Generator[Node, None, None]:
             break
         
 
-def __prepare_directory(file_url:str, sub_dir:str) -> str:
+def __prepare_directory(file_url:str, sub_dir:str, level:str='') -> str:
     # Create path like in the original codebase
     path = file_url[file_url.find('master')+len('master')+1 :] # Reach master branch
     if sub_dir != '':
         path = path[path.find(sub_dir) :] # Subdirectory only
     path = path[:-5] # Remove .java
-    path = 'data/' + path # Put path in data folder
+    path = '/scratch/mwojdak/data/' + level + '/' + path # Put path in data folder
 
     # Create directory if it doesn't exist
     Path(path).mkdir(parents=True, exist_ok=True) 
@@ -68,7 +69,7 @@ def __save_as(data, path:str, extension:str, duplicate_notifs:bool = False) -> N
 
 
 def __save_class(data, file_url:str, sub_dir:str, nested_classes:list[dict]) -> None:
-    path = __prepare_directory(file_url, sub_dir)
+    path = __prepare_directory(file_url, sub_dir, 'classes')
     filename = __format_class_names(nested_classes) # Name file after the classes being nested in
 
     __save_as(data, path=f'{path}/{filename}', extension='json', duplicate_notifs=True)
@@ -76,7 +77,7 @@ def __save_class(data, file_url:str, sub_dir:str, nested_classes:list[dict]) -> 
 
 
 def __save_method(data, file_url:str, sub_dir:str, nested_classes:list[dict], nested_methods:list[dict]) -> None:
-    path = __prepare_directory(file_url, sub_dir)
+    path = __prepare_directory(file_url, sub_dir, 'methods')
 
     filename = ''
     if len(nested_classes) > 0:
@@ -89,7 +90,7 @@ def __save_method(data, file_url:str, sub_dir:str, nested_classes:list[dict], ne
 
 
 def __save_token(data, file_url:str, sub_dir:str, nested_classes:list[dict], nested_methods:list[dict]) -> None:
-    path = __prepare_directory(file_url, sub_dir)
+    path = __prepare_directory(file_url, sub_dir, 'tokens')
 
     filename = ''
     if len(nested_classes) > 0:
@@ -182,8 +183,10 @@ def generate_code_embeddings(file_url:str, sub_dir:str, model:UniXcoder, device:
             # Add current class
             nested_methods.append({'name':method_name, 'span':span})
 
-        elif (len(node.children) == 0) and (node.type != 'block_comment' and node.type != 'line_comment'): # Leaf node that is not a comment
-            level = 'token'
+            ''' TODO Commented this out for initial testing as embedding all tokens is expensive '''
+            # elif (len(node.children) == 0) and (node.type != 'block_comment' and node.type != 'line_comment'): # Leaf node that is not a comment
+            #     level = 'token'
+
         else: # If node does not fit one of the above levels, move on to the next
             continue
         

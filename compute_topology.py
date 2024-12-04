@@ -24,7 +24,7 @@ def GetBettiCurvesFromPointCloud(X, J, dim=3):
 
 def extract_points(level:str):
     
-    base_path = Path('/scratch/zzhang30/cs420/data/').joinpath(level)
+    base_path = Path('/scratch/mwojdak/data/').joinpath(level)
 
     all_files = list(base_path.glob('**/*.json'))
 
@@ -34,9 +34,9 @@ def extract_points(level:str):
     for file in all_files:
         with file.open() as f:
             data = json.load(f)
-            X.append(data['embedding'][0]) # idk but embeddings are in a nested list
+            X.append(data[0][0]) # idk but embeddings are in a nested list
 
-    
+    print(X[0])
     X = np.asarray(X)
     # Each embedding has >700 dimensions. about 500 embeddings for classes
     print(X.shape)
@@ -127,4 +127,4 @@ def extract_points(level:str):
 
 
 if __name__ == "__main__":
-    extract_points("ivyClass")
+    extract_points("classes")
