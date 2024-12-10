@@ -8,29 +8,31 @@ def main():
     #X = extract_points(['ivy/ant'], 'classes')
     X = extract_points(['ivy/Ivy'], 'methods')
 
+    np.random.seed(0)
+    # both uniform and normal are much more spread out than actual data
+    #X = np.array(np.random.uniform(high=2., low=-2., size=(70,768)), dtype=np.float32)
+    #X = np.array(np.random.normal(loc=0, scale=1.0, size=(70,768)), dtype=np.float32)
+
+    plt.scatter(X[:,0], X[:,1])
+    plt.savefig('data_plot.png')
+
     # Large datasets (>100 points) may need to increase sparse variable to 1 or 2 to be computable in a reasonable amount of time
     # Using sparse introduces a random element as the points used to reduce are selected randomly
     st = get_rips_tree(X, max_edge=50, sparse=0, max_dim=3)
-
-    # Seems like alpha complexes are too slow for high dimensional data (only 3 points takes 1 min)
-    # Interestingly distances seem different when using alpha complexes (values almost 10x what rips gives)
-    #alpha_complex = gudhi.AlphaComplex(points=X, precision='fast')
-    #st = alpha_complex.create_simplex_tree()
-    #print('Alpha complex is of dimension ', st.dimension(), ' - ', st.num_simplices(), ' simplices - ', st.num_vertices(), ' vertices.')
-
+    persistent_homology(st)
     
-## Getting Betti curves
-def Betti_curves(simplex_tree)
-    I = 50 * np.linspace(0,1,100)
-    Betti_curves = betti_curves_from_simplex_tree(simplex_tree, I)
+# ## Getting Betti curves
+# def Betti_curves(simplex_tree)
+#     I = 50 * np.linspace(0,1,100)
+#     Betti_curves = betti_curves_from_simplex_tree(simplex_tree, I)
 
-    # Save betti curves to an image
-    fig = plt.figure(figsize=(15,5))
-    ax1 = fig.add_subplot(1,3,1); ax2 = fig.add_subplot(1,3,2); ax3 = fig.add_subplot(1,3,3)
-    ax1.step(I, Betti_curves[0])
-    ax2.step(I, Betti_curves[1])
-    ax3.step(I, Betti_curves[2])
-    plt.savefig('Betti-Curves')
+#     # Save betti curves to an image
+#     fig = plt.figure(figsize=(15,5))
+#     ax1 = fig.add_subplot(1,3,1); ax2 = fig.add_subplot(1,3,2); ax3 = fig.add_subplot(1,3,3)
+#     ax1.step(I, Betti_curves[0])
+#     ax2.step(I, Betti_curves[1])
+#     ax3.step(I, Betti_curves[2])
+#     plt.savefig('Betti-Curves')
 
 
     # ploting individual dimensions looks very similar to normal distribution however normal distribution
@@ -55,6 +57,7 @@ def plot_individual_axes():
     # ax8.scatter(X[:,2], X[:,3])
     # ax9.scatter(X[:20,20], X[:20,40])
     # plt.savefig('data_plot.png')
+    pass
 
 
     
