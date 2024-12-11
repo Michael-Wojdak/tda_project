@@ -8,8 +8,8 @@ def main():
     #X = extract_points(['ivy/ant'], 'classes')
     X = extract_points(['ivy/Ivy'], 'methods')
 
-    np.random.seed(0)
     # both uniform and normal are much more spread out than actual data
+    #np.random.seed(0)
     #X = np.array(np.random.uniform(high=2., low=-2., size=(70,768)), dtype=np.float32)
     #X = np.array(np.random.normal(loc=0, scale=1.0, size=(70,768)), dtype=np.float32)
 
@@ -18,7 +18,7 @@ def main():
 
     # Large datasets (>100 points) may need to increase sparse variable to 1 or 2 to be computable in a reasonable amount of time
     # Using sparse introduces a random element as the points used to reduce are selected randomly
-    st = get_rips_tree(X, max_edge=50, sparse=0, max_dim=3)
+    st = get_rips_tree(X, max_edge=50, sparse=None, max_dim=3)
     persistent_homology(st)
     
 # ## Getting Betti curves

@@ -8,27 +8,27 @@ from functions import *
 def main(): 
     '''Computing simplicial complexes:'''
     # All classes in subfolders
-    # datasets = [
-    #     extract_points(['ivy/tools'], 'classes'), #/analyser
-    #     extract_points(['ivy/util'], 'classes'),
-    #     extract_points(['ivy/ant'], 'classes'),
-    #     extract_points(['ivy/core'], 'classes'),
-    #     extract_points(['ivy/osgi'], 'classes'),
-    #     extract_points(['ivy/plugins'], 'classes')
-    # ]
+    datasets = [
+        extract_points(['ivy/tools'], 'classes'), #/analyser
+        extract_points(['ivy/util'], 'classes'),
+        extract_points(['ivy/ant'], 'classes'),
+        extract_points(['ivy/core'], 'classes'),
+        extract_points(['ivy/osgi'], 'classes'),
+        extract_points(['ivy/plugins'], 'classes')
+    ]
 
     # Methods split by subfolder
-    datasets = [
-        extract_points(['ivy/Ivy'], 'methods'),
-        extract_points(['ivy/Ivy14'], 'methods'),
-        extract_points(['ivy/Main'], 'methods'),
-        extract_points(['ivy/tools'], 'methods'), #/analyser
-        extract_points(['ivy/util'], 'methods'),
-        extract_points(['ivy/ant'], 'methods'),
-        extract_points(['ivy/core'], 'methods'),
-        extract_points(['ivy/osgi'], 'methods'),
-        extract_points(['ivy/plugins'], 'methods')
-    ]
+    # datasets = [
+    #     extract_points(['ivy/Ivy'], 'methods'),
+    #     extract_points(['ivy/Ivy14'], 'methods'),
+    #     extract_points(['ivy/Main'], 'methods'),
+    #     extract_points(['ivy/tools'], 'methods'), #/analyser
+    #     extract_points(['ivy/util'], 'methods'),
+    #     extract_points(['ivy/ant'], 'methods'),
+    #     extract_points(['ivy/core'], 'methods'),
+    #     extract_points(['ivy/osgi'], 'methods'),
+    #     extract_points(['ivy/plugins'], 'methods')
+    # ]
 
     # All classes vs. subset of methods
     # datasets = [
@@ -52,6 +52,7 @@ def main():
         ax = fig.add_subplot(1, len(simplex_trees), i+1)
         barcode = st.persistence(homology_coeff_field=2)
         gudhi.plot_persistence_diagram(barcode, axes = ax)
+        plt.title('Title')
 
     plt.savefig('my_plot.png')
 

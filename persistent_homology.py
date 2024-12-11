@@ -13,7 +13,7 @@ def main():
     X = extract_points(['ivy/Ivy'], 'methods')
 
     # Random distributions for comparison:
-    #np.random.seed(1)
+    #np.random.seed(0)
     #X = np.array(np.random.uniform(high=2., low=-2., size=(70,768)), dtype=np.float32)
     #X = np.array(np.random.normal(loc=0, scale=1.0, size=(70,768)), dtype=np.float32)
 
