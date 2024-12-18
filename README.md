@@ -29,3 +29,41 @@ between any levels or sets of embedings
 TODO
 
 4. more advanced selection of which embedings to consider?
+
+
+Performance:
+
+full rips very costly, 1000 points takes several secconds to compute and more for persistent homology
+1-d rips to expansion is multiple times faster and can generate equivalent ph
+alpha may have lower O() but is exponential for the dimension of the data (768 is very high for this)
+
+sparse:
+significant speed up 
+
+(on all classes:
+None
+Rips complex is of dimension 3 - 2000592274 simplices - 579 vertices.
+get_rips_tree took  64.2231 seconds
+1
+Rips complex is of dimension 3 - 1376876777 simplices - 579 vertices.
+get_rips_tree took  42.5172 seconds
+2
+Rips complex is of dimension 3 - 3457 simplices - 579 vertices.
+get_rips_tree took  0.3579 seconds)
+
+on classes in ant and core:
+none
+Rips complex is of dimension 3 - 41467698 simplices - 208 vertices.
+get_rips_tree took  1.6181 seconds
+1
+Rips complex is of dimension 3 - 32313432 simplices - 208 vertices.
+get_rips_tree took  1.1384 seconds
+2
+Rips complex is of dimension 3 - 1732 simplices - 208 vertices.
+get_rips_tree took  0.0545 seconds
+
+, can mess with homology and is random each run
+
+
+future directions: would have liked to study how embedings worked and maybe done a bit more EDA to better understand possible shape/what
+techniques should be used

@@ -1,5 +1,8 @@
-''' Code from Cynthia's repo (https://github.com/CynthiaTheGriffin/topology_project/tree/main) with
-a few changes to save embeddings of different levels in defferent directories'''
+'''
+Code from Cynthia's repo (https://github.com/CynthiaTheGriffin/topology_project/tree/main) 
+modified so that embeddings of different levels are stored in different directories
+and so a readme is automatically generated
+'''
 import os
 from pathlib import Path
 from typing import Generator
@@ -43,6 +46,17 @@ def __prepare_directory(file_url:str, sub_dir:str, level:str='') -> str:
     Path(path).mkdir(parents=True, exist_ok=True) 
     return path
 
+def __add_readme():
+    path = '/scratch/mwojdak/data/'
+    with open(path + 'README.md', "w") as f:
+        f.write('This folder should contain embeding data for the source code of ant-ivy ')
+        f.write('(https://github.com/apache/ant-ivy/tree/master/src/java/org/apache/ivy).\n\n')
+
+        f.write('The classes, methods, and tokens sub-directories are structured in the same way as the source code ')
+        f.write('with each .java file being replaced by a directory that holds embedings for each code fragment ')
+        f.write('of the corresponding level found within that file.\n\n')
+
+        f.write('Embedings are stored in .json files containing an embedding vector, object name, and start/end points of the code fragment.')
 
 def __format_class_names(classes:list[dict]) -> str:
     class_names = ['c.'+c['name'] for c in classes]
@@ -183,9 +197,8 @@ def generate_code_embeddings(file_url:str, sub_dir:str, model:UniXcoder, device:
             # Add current class
             nested_methods.append({'name':method_name, 'span':span})
 
-            ''' TODO Commented this out for initial testing as embedding all tokens is expensive '''
-            # elif (len(node.children) == 0) and (node.type != 'block_comment' and node.type != 'line_comment'): # Leaf node that is not a comment
-            #     level = 'token'
+        elif (len(node.children) == 0) and (node.type != 'block_comment' and node.type != 'line_comment'): # Leaf node that is not a comment
+            level = 'token'
 
         else: # If node does not fit one of the above levels, move on to the next
             continue
@@ -237,6 +250,9 @@ def embed_all_files(files:dict, sub_dir:str) -> None:
             have no subdirectory to focus on, and organize everything from the master 
             branch.
     '''
+    # First, automatically add a README explaining the structure of the data
+    __add_readme()
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = UniXcoder("microsoft/unixcoder-base")
     model.to(device)

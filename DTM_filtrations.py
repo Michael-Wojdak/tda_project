@@ -7,7 +7,10 @@ from sklearn.metrics.pairwise import euclidean_distances
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-''' Taken from TDA-tutorial repo (https://github.com/GUDHI/TDA-tutorial/blob/master/DTM_filtrations.py)'''
+'''
+Copied from TDA-tutorial repo (https://github.com/GUDHI/TDA-tutorial/blob/master/DTM_filtrations.py).
+Requires the scikit-learn package be installed.
+'''
 
 def DTM(X,query_pts,m):
     '''

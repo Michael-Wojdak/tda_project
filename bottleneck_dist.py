@@ -8,14 +8,19 @@ from functions import *
 def main(): 
     '''Computing simplicial complexes:'''
     # All classes in subfolders
-    datasets = [
-        extract_points(['ivy/tools'], 'classes'), #/analyser
-        extract_points(['ivy/util'], 'classes'),
-        extract_points(['ivy/ant'], 'classes'),
-        extract_points(['ivy/core'], 'classes'),
-        extract_points(['ivy/osgi'], 'classes'),
-        extract_points(['ivy/plugins'], 'classes')
-    ]
+    directory_names = ['tools', 'util', 'ant', 'core', 'osgi', 'plugins']
+    datasets = []
+    for name in directory_names:
+        datasets.append(extract_points(['ivy/' + name], 'classes'))
+    
+    # datasets = [
+    #     extract_points(['ivy/tools'], 'classes'), #/analyser
+    #     extract_points(['ivy/util'], 'classes'),
+    #     extract_points(['ivy/ant'], 'classes'),
+    #     extract_points(['ivy/core'], 'classes'),
+    #     extract_points(['ivy/osgi'], 'classes'),
+    #     extract_points(['ivy/plugins'], 'classes')
+    # ]
 
     # Methods split by subfolder
     # datasets = [
@@ -52,9 +57,9 @@ def main():
         ax = fig.add_subplot(1, len(simplex_trees), i+1)
         barcode = st.persistence(homology_coeff_field=2)
         gudhi.plot_persistence_diagram(barcode, axes = ax)
-        plt.title('Title')
+        plt.title(directory_names[i])
 
-    plt.savefig('my_plot.png')
+    plt.savefig('persistence_diagram.png')
 
     ''' Compute persistence values for Betti 0 and Betti 1'''
     for st in simplex_trees:

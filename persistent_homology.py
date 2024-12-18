@@ -46,7 +46,7 @@ def main():
     gudhi.plot_persistence_barcode(barcode, axes = ax1)
     gudhi.plot_persistence_diagram(barcode, axes = ax2)
 
-    plt.savefig('my_plot.png')
+    plt.savefig('persistence_diagram.png')
 
 
 if __name__ == "__main__":
