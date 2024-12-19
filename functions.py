@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt
 
 import time
 
-''' Contains functions used for extracting data and performing topological calculations'''
+'''Contains functions used for extracting data and performing topological calculations'''
 
-# Grabs all json files from each path in paths and returns a point cloud of their embedding
 def extract_points(paths = ['ivy/'], level = 'classes'):
     '''
-    Reads data from files in the specified directories and extracts embedding data in the form of a point cloud
+    Grabs all json files from the specified directories and extracts embedding data in the form of a point cloud
 
     Input:
         paths: a list of paths within the data directories from which to extract embeddings
@@ -20,8 +19,6 @@ def extract_points(paths = ['ivy/'], level = 'classes'):
     base_path = Path('/scratch/mwojdak/data/').joinpath(level)
 
     X = []
-    #Y=[] # corresponding data that can distinguish points based on origin etc.
-    # name of folder one level up (file it was contained in), directory the file was in
 
     for path in paths:
         p = base_path.joinpath(path)
@@ -36,6 +33,7 @@ def extract_points(paths = ['ivy/'], level = 'classes'):
     print('Extracted point cloud contains %d points' % X.shape[0])
 
     return X
+
 
 def get_rips_tree(X, max_edge, sparse, max_dim, print_filtration=False):
     '''

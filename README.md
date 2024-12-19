@@ -1,44 +1,34 @@
 # tda_project
 
-Start with the tda env
+### Setup:
 
-Activate the conda base environment (on the bg's I used `source /opt/anaconda/bin/activate`)
+Code in this repo is designed to run using the tda environment
 
-Then activate the tda environment with `conda activate tda` (If this is the first time create it with `conda env create -f tda.yml`)
+If the tda environment has not been created yet create it with `conda env create -f tda.yml`
 
-You may need to `pip install matplotlib` and `pip install gudhi` once inside the tda env.
-some gudhi modules like dtm also requires scipy `pip install scipy` (not used currently)
-DTM_filtrations.py requires `pip install scikit-learn`
+To activate the tda environment first activate the conda base environment (on the bg's I used `source /opt/anaconda/bin/activate`).
+Then activate the tda environment with `conda activate tda`
 
-generate_code_embeddings.py can be used to create the embedding data. That data should already be present on bg13 in `/scratch/mwojdak/data/`.
+You may need to run `pip install matplotlib` and `pip install gudhi` once inside the tda env.
 
-`functions.py` contains utility functions used in the other files
+DTM_filtrations.py also requires `pip install scikit-learn` and `pip install scipy`.
 
-Other scripts like `persistent_homology.py` and `bottleneck_distance.py` are designed to be modified/run individually.
+`generate_code_embeddings.py` can be used to create the embedding data from the files listed in `download_urls.json`. That data is saved to `/scratch/mwojdak/data/` and should already be present on the bg13 machine.
 
+### Scripts:
 
+`DTM_filtrations.py`, `unixcoder.py`, and `functions.py` are utility scripts that are used by other files
 
-1. persistent homology used to show persistence diagrams and betti curves. Compared against uniform and normal distributions
-data seems to have a wider range of spacings with components merging at early, mid, and late thickening values (other distributions looked highly separated by comparison).
+Other scripts are designed to be modified/run individually and explore different aspects of the project:
 
-2. bottleneck distance compares different persistence diagrams, so far haven't been able to detect any strong differences
-between any levels or sets of embedings
+`rips_complexes.py` analyzes the performance of calculating persitent homology using rips complexes.
 
-3. dtm filtrations should help reduce noise, seems to reduce to nothing interesting (single c.c. no other features).
+`alpha_complexes.py` analyzes the performance of calculating persistent homology using alpha complexes.
 
-TODO
+`persistent_homology.py` generates Betti curves, persistence barcodes, and persistence diagrams.
 
-4. more advanced selection of which embedings to consider?
+`bottleneck_dist.py` compares persistence diagrams of multiple datasets and computes bottleneck distances between them.
 
+`dtm.py` uses a DTM filtration to compute persistent homology of data.
 
-Performance:
-
-full rips very costly, 1000 points takes several secconds to compute and more for persistent homology
-1-d rips to expansion is multiple times faster and can generate equivalent ph
-sparse gives speed up but is also random and messes with ph
-
-alpha may have lower O() but is exponential for the dimension of the data (768 is very high for this)
-
-
-future directions: would have liked to study how embedings worked and maybe done a bit more EDA to better understand possible shape/what
-techniques should be used
+Some notworthy figures are included in the figures directory.
