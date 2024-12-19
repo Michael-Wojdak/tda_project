@@ -3,29 +3,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functions import *
 
-''' Computes the persistent homology of the specified data and generates Betti curves,
-barcodes, and persistence diagrams'''
+'''
+Computes the persistent homology of the specified data and generates Betti curves,
+barcodes, and persistence diagrams
+'''
 
 def main(): 
-    '''Computing simplicial complexes:'''
+    '''Extracting data:'''
     #X = extract_points(['ivy/Ivy', 'ivy/Ivy14', 'ivy/Main'], 'classes')
     #X = extract_points(['ivy/ant'], 'classes')
-    X = extract_points(['ivy/Ivy'], 'methods')
+    #X = extract_points(['ivy/Ivy'], 'methods')
+    X = extract_points(['ivy/Ivy'], 'tokens')
 
     # Random distributions for comparison:
     #np.random.seed(0)
     #X = np.array(np.random.uniform(high=2., low=-2., size=(70,768)), dtype=np.float32)
     #X = np.array(np.random.normal(loc=0, scale=1.0, size=(70,768)), dtype=np.float32)
 
+    '''Computing simplicial complexes:'''
     # Large datasets (>100 points) may need to increase sparse variable to 1 or 2 to be computable in a reasonable amount of time
     # Using sparse introduces a random element as the points used to reduce are selected randomly
-    st = get_rips_tree(X, max_edge=50, sparse=0, max_dim=3)
-
-    # Seems like alpha complexes are too slow for high dimensional data (only 3 points takes 1 min)
-    # Interestingly distances seem different when using alpha complexes (values almost 10x what rips gives)
-    #alpha_complex = gudhi.AlphaComplex(points=X, precision='fast')
-    #st = alpha_complex.create_simplex_tree()
-    #print('Alpha complex is of dimension ', st.dimension(), ' - ', st.num_simplices(), ' simplices - ', st.num_vertices(), ' vertices.')
+    st = get_rips_tree(X, max_edge=50, sparse=None, max_dim=3)
 
     ''' Getting Betti curves:'''
     I = 50 * np.linspace(0,1,100)

@@ -33,19 +33,6 @@ plt.axis('equal')
 plt.title('Values of the DTM on X with parameter m='+str(m))
 plt.savefig('output')
 
-# m = 0.1               # parameter of the DTM
-# N = np.shape(X)[0]    # number of points
-# k = int(m*N)          # parameter of the DTMRipsComplex in gudhi
-
-# dtm_rips = gudhi.dtm_rips_complex.DTMRipsComplex(points=X, k=k)  # DTM-Filtration in gudhi
-# st_DTM = dtm_rips.create_simplex_tree(max_dimension=2)
-# diagram_DTM = st_DTM.persistence()                               # compute the persistence diagram
-
-# # plot the persistence diagram
-# gudhi.plot_persistence_diagram(diagram_DTM)
-# plt.title('Persistence diagram of the DTM-filtration with parameter p ='+str(1))
-# plt.savefig('output')
-
 ' Compute a DTM-filtration '
 p = 1                                    
 dimension_max = 2                               # maximal dimension to expand the complex

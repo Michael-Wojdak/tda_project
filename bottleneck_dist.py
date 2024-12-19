@@ -6,45 +6,32 @@ from functions import *
 ''' Computes the bottleneck distance between diagrams of different datasets'''
 
 def main(): 
-    '''Computing simplicial complexes:'''
-    # All classes in subfolders
-    directory_names = ['tools', 'util', 'ant', 'core', 'osgi', 'plugins']
-    datasets = []
-    for name in directory_names:
-        datasets.append(extract_points(['ivy/' + name], 'classes'))
-    
-    # datasets = [
-    #     extract_points(['ivy/tools'], 'classes'), #/analyser
-    #     extract_points(['ivy/util'], 'classes'),
-    #     extract_points(['ivy/ant'], 'classes'),
-    #     extract_points(['ivy/core'], 'classes'),
-    #     extract_points(['ivy/osgi'], 'classes'),
-    #     extract_points(['ivy/plugins'], 'classes')
-    # ]
+    '''Defining datasets:'''
 
-    # Methods split by subfolder
-    # datasets = [
-    #     extract_points(['ivy/Ivy'], 'methods'),
-    #     extract_points(['ivy/Ivy14'], 'methods'),
-    #     extract_points(['ivy/Main'], 'methods'),
-    #     extract_points(['ivy/tools'], 'methods'), #/analyser
-    #     extract_points(['ivy/util'], 'methods'),
-    #     extract_points(['ivy/ant'], 'methods'),
-    #     extract_points(['ivy/core'], 'methods'),
-    #     extract_points(['ivy/osgi'], 'methods'),
-    #     extract_points(['ivy/plugins'], 'methods')
-    # ]
+    # All classes in each subfolder
+    # datasets = []
+    # directory_names = ['tools', 'util', 'ant', 'core', 'osgi', 'plugins']
+    # for name in directory_names:
+    #     datasets.append(extract_points(['ivy/' + name], 'classes'))
+
+    # Methods split by subfolder/from java files in the base directory
+    datasets = []
+    directory_names = ['tools', 'util', 'ant', 'core', 'osgi', 'plugins', 'Ivy', 'Ivy14', 'Main']
+    for name in directory_names:
+        datasets.append(extract_points(['ivy/' + name], 'methods'))
 
     # All classes vs. subset of methods
+    # directory_names = ['ivy classes', 'core methods']
     # datasets = [
     #     extract_points(['ivy'], 'classes'),
     #     extract_points(['ivy/core'], 'methods')
     # ]
     
+    '''Computing simplicial complexes:'''
 
     ''' Here we calculate only the first dimensional simplicies (graph), then collapse the size and expand to
     the desired dimension in order to obtain an equivalent persistence diagram in much less time'''
-    # edge length increased to 60 to ensure only 1 cc remains in all cases (otherwise botl. dist = inf)
+    # edge length increased to 60 to ensure only 1 cc remains in all cases (otherwise botl. dist can = inf)
     simplex_trees = [get_rips_tree(X, max_edge=60, sparse=None, max_dim=1) for X in datasets]
 
     for st in simplex_trees:
