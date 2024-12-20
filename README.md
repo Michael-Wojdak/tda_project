@@ -2,12 +2,12 @@
 
 ### Setup:
 
-Code in this repo is designed to run using the tda environment
+Code in this repo is designed to be run using the tda environment.
 
-If the tda environment has not been created yet create it with `conda env create -f tda.yml`
+If the tda environment has not been created yet create it with `conda env create -f tda.yml`.
 
 To activate the tda environment first activate the conda base environment (on the bg's I used `source /opt/anaconda/bin/activate`).
-Then activate the tda environment with `conda activate tda`
+Then activate the tda environment with `conda activate tda`.
 
 You may need to run `pip install matplotlib` and `pip install gudhi` once inside the tda env.
 
